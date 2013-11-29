@@ -11,8 +11,23 @@ coordCtrl = function($scope){
   import$($scope, {
     twd97: {},
     gws84: {},
+    byWatch: false,
     map: new google.maps.Map(document.getElementById('map-view'), mapOption),
-    byWatch: false
+    updateMapTimer: null,
+    updateMap: function(){
+      if (this.updateMapTimer) {
+        clearTimeout(this.updateMapTimer);
+      }
+      return this.updateMapTimer = setTimeout(function(){
+        return $scope.$apply(function(){
+          $scope.updateMapTimer = null;
+          $scope.map.setCenter(new google.maps.LatLng($scope.gws84.y, $scope.gws84.x));
+          return google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+            return google.maps.event.trigger($scope.map, 'resize');
+          });
+        });
+      }, 1000);
+    }
   });
   $scope.$watch('twd97.x + twd97.y', function(){
     var laglng, ref$;
@@ -23,7 +38,7 @@ coordCtrl = function($scope){
     }
     ref$ = laglng = coord.toGws84($scope.twd97.x, $scope.twd97.y), $scope.gws84.x = ref$.lng, $scope.gws84.y = ref$.lat;
     if ($scope.gws84.x && $scope.gws84.y) {
-      return $scope.map.setCenter(new google.maps.LatLng($scope.gws84.y, $scope.gws84.x));
+      return $scope.updateMap();
     }
   });
   return $scope.$watch('gws84.x + gws84.y', function(){
@@ -38,7 +53,7 @@ coordCtrl = function($scope){
       lng: $scope.gws84.x
     }), $scope.twd97.x = ref$[0], $scope.twd97.y = ref$[1];
     if ($scope.gws84.x && $scope.gws84.y) {
-      return $scope.map.setCenter(new google.maps.LatLng($scope.gws84.y, $scope.gws84.x));
+      return $scope.updateMap();
     }
   });
 };

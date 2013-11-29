@@ -7,11 +7,18 @@ html, body {
 #content {
   margin: 20px; }
 
-#content .coord input:first-of-type {
-  margin-right: 1%; }
-#content .coord input {
-  width: 49%; }
+#content .coord {
+  width: 100%; }
+  #content .coord input:first-of-type {
+    margin-right: 1%; }
+  #content .coord input {
+    width: 49%; }
 
 #map-view {
-  width: 100%;
-  height: 300px; }
+  position: absolute;
+  width: 80%;
+  height: 300px;
+  left: 50%;
+  margin-left: -40%;
+  border: 1px solid #cccccc;
+  background: #dddddd; }

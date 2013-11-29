@@ -9,18 +9,25 @@ coordCtrl = ($scope) ->
   $scope <<< do
     twd97: {}
     gws84: {}
-    map: new google.maps.Map document.getElementById(\map-view), map-option
     by-watch: false
+    map: new google.maps.Map document.getElementById(\map-view), map-option
+    update-map-timer: null
+    update-map: ->
+      if @update-map-timer => clearTimeout @update-map-timer
+      @update-map-timer = setTimeout ->
+        <- $scope.$apply
+        $scope.update-map-timer = null
+        $scope.map.setCenter new google.maps.LatLng $scope.gws84.y, $scope.gws84.x
+        google.maps.event.addListenerOnce $scope.map, \idle, -> google.maps.event.trigger $scope.map, \resize
+      ,1000
 
   $scope.$watch 'twd97.x + twd97.y' ->
     if $scope.by-watch => return $scope.by-watch = false else $scope.by-watch = true
     {lng: $scope.gws84.x, lat: $scope.gws84.y} = laglng = coord.to-gws84 $scope.twd97.x, $scope.twd97.y
-    if $scope.gws84.x and $scope.gws84.y =>
-      $scope.map.setCenter new google.maps.LatLng $scope.gws84.y, $scope.gws84.x
+    if $scope.gws84.x and $scope.gws84.y => $scope.update-map!
 
   $scope.$watch 'gws84.x + gws84.y' ->
     if $scope.by-watch => return $scope.by-watch = false else $scope.by-watch = true
     [$scope.twd97.x, $scope.twd97.y] = coord.to-twd97 {lat: $scope.gws84.y, lng: $scope.gws84.x}
-    if $scope.gws84.x and $scope.gws84.y =>
-      $scope.map.setCenter new google.maps.LatLng $scope.gws84.y, $scope.gws84.x
+    if $scope.gws84.x and $scope.gws84.y => $scope.update-map!
 
