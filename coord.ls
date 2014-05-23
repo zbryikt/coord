@@ -100,3 +100,4 @@ coord =
     x = K4*p + K5*(p**3) + dx
     return [x, y]
 
+(if @window? => @coord = {} else @) <<< coord

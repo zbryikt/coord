@@ -1,0 +1,24 @@
+{
+  "name": "coord",
+  "description": "TWD97 to GWS84 converter",
+  "version": "0.0.1",
+  "keywords": [ "TWD97", "GWS84", "Latitude", "Longitude" ],
+  "homepage": "https://github.com/zbryikt/coord",
+  "author": {
+    "name": "Kirby T. Wu",
+    "url": "http://tkirby.org/blog/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zbryikt/coord"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/zbryikt/license/raw/master/README.md"
+    }
+  ],
+  "main": "coord.js",
+  "dependencies": {
+  }
+}
