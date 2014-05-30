@@ -5,7 +5,7 @@ map-option = do
   maxZoom: 18
   mapTypeId: google.maps.MapTypeId.ROADMAP
 
-coordCtrl = ($scope) ->
+coordCtrl = ($scope, $timeout) ->
   $scope <<< do
     twd97: {}
     gws84: {}
@@ -14,13 +14,19 @@ coordCtrl = ($scope) ->
 
   $scope.$watch 'twd97.x + twd97.y' ->
     if $scope.by-watch => return $scope.by-watch = false else $scope.by-watch = true
-    {lng: $scope.gws84.x, lat: $scope.gws84.y} = laglng = coord.to-gws84 $scope.twd97.x, $scope.twd97.y
+    {lng: $scope.gws84.x, lat: $scope.gws84.y} = laglng = coord.new-to-gws84 $scope.twd97.x, $scope.twd97.y
     if $scope.gws84.x and $scope.gws84.y =>
       $scope.map.setCenter new google.maps.LatLng $scope.gws84.y, $scope.gws84.x
 
   $scope.$watch 'gws84.x + gws84.y' ->
     if $scope.by-watch => return $scope.by-watch = false else $scope.by-watch = true
-    [$scope.twd97.x, $scope.twd97.y] = coord.to-twd97 {lat: $scope.gws84.y, lng: $scope.gws84.x}
+    [$scope.twd97.x, $scope.twd97.y] = coord.new-to-twd97 {lat: $scope.gws84.y, lng: $scope.gws84.x}
     if $scope.gws84.x and $scope.gws84.y =>
       $scope.map.setCenter new google.maps.LatLng $scope.gws84.y, $scope.gws84.x
 
+  if $scope.auto-test =>
+    $timeout ->
+      $scope.twd97
+        ..x = 305382.45248192194
+        ..y = 2770084.3852933967
+    , 1000

@@ -7,7 +7,7 @@ mapOption = {
   maxZoom: 18,
   mapTypeId: google.maps.MapTypeId.ROADMAP
 };
-coordCtrl = function($scope){
+coordCtrl = function($scope, $timeout){
   import$($scope, {
     twd97: {},
     gws84: {},
@@ -21,19 +21,19 @@ coordCtrl = function($scope){
     } else {
       $scope.byWatch = true;
     }
-    ref$ = laglng = coord.toGws84($scope.twd97.x, $scope.twd97.y), $scope.gws84.x = ref$.lng, $scope.gws84.y = ref$.lat;
+    ref$ = laglng = coord.newToGws84($scope.twd97.x, $scope.twd97.y), $scope.gws84.x = ref$.lng, $scope.gws84.y = ref$.lat;
     if ($scope.gws84.x && $scope.gws84.y) {
       return $scope.map.setCenter(new google.maps.LatLng($scope.gws84.y, $scope.gws84.x));
     }
   });
-  return $scope.$watch('gws84.x + gws84.y', function(){
+  $scope.$watch('gws84.x + gws84.y', function(){
     var ref$;
     if ($scope.byWatch) {
       return $scope.byWatch = false;
     } else {
       $scope.byWatch = true;
     }
-    ref$ = coord.toTwd97({
+    ref$ = coord.newToTwd97({
       lat: $scope.gws84.y,
       lng: $scope.gws84.x
     }), $scope.twd97.x = ref$[0], $scope.twd97.y = ref$[1];
@@ -41,6 +41,15 @@ coordCtrl = function($scope){
       return $scope.map.setCenter(new google.maps.LatLng($scope.gws84.y, $scope.gws84.x));
     }
   });
+  if ($scope.autoTest) {
+    return $timeout(function(){
+      var x$;
+      x$ = $scope.twd97;
+      x$.x = 305382.45248192194;
+      x$.y = 2770084.3852933967;
+      return x$;
+    }, 1000);
+  }
 };
 function import$(obj, src){
   var own = {}.hasOwnProperty;
