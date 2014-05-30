@@ -1,7 +1,7 @@
 {
   "name": "coord",
   "description": "TWD97 to GWS84 converter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [ "TWD97", "GWS84", "Latitude", "Longitude" ],
   "homepage": "https://github.com/zbryikt/coord",
   "author": {
