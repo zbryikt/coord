@@ -26,7 +26,6 @@ coord =
     lng = (lng - Math.floor((lng + 180) / 360) * 360) * Math.PI / 180
     lat = lat * Math.PI / 180
     V = a / Math.sqrt(1 - e * (Math.sin(lat) ** 2))
-    console.log a, e, lat
     T = Math.tan(lat) ** 2
     C = e2 * Math.cos(lat) ** 2
     A = Math.cos(lat) * (lng - lng0)
@@ -36,10 +35,6 @@ coord =
           Math.sin(4.0 * lat) - (35.0 * (e ** 3) / 3072.0) * Math.sin(6.0 * lat))
     x = dx + k0 * V * (A + (1 - T + C) * (A ** 3) / 6 + (5 - 18 * T + (T ** 2) + 72 * C - 58 * e2) * (A ** 5) / 120)
     y = dy + k0 * (M + V * Math.tan(lat) * ((A ** 2) / 2 + (5 - T + 9 * C + 4 * (C ** 2)) * (A ** 4) / 24 + ( 61 - 58 * T + (T ** 2) + 600 * C - 330 * e2) * (A ** 6) / 720))
-    console.log dx
-    console.log dx + k0 * V * (A + (1 - T + C) * (A ** 3) / 6 )
-    console.log k0, V, A, T, C
-    console.log dx + k0 * V * (A + (1 - T + C) * (A ** 3) / 6 + (5 - 18 * T + (T ** 2) + 72 * C - 58 * e2) * (A ** 5) / 120)
     return [x, y]
 
   to-gws84: (x, y) ->

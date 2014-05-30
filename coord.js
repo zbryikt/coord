@@ -28,17 +28,12 @@
       lng = (lng - Math.floor((lng + 180) / 360) * 360) * Math.PI / 180;
       lat = lat * Math.PI / 180;
       V = a / Math.sqrt(1 - e * Math.pow(Math.sin(lat), 2));
-      console.log(a, e, lat);
       T = Math.pow(Math.tan(lat), 2);
       C = e2 * Math.pow(Math.cos(lat), 2);
       A = Math.cos(lat) * (lng - lng0);
       M = a * ((1.0 - e / 4.0 - 3.0 * Math.pow(e, 2) / 64.0 - 5.0 * Math.pow(e, 3) / 256.0) * lat - (3.0 * e / 8.0 + 3.0 * Math.pow(e, 2) / 32.0 + 45.0 * Math.pow(e, 3) / 1024.0) * Math.sin(2.0 * lat) + (15.0 * Math.pow(e, 2) / 256.0 + 45.0 * Math.pow(e, 3) / 1024.0) * Math.sin(4.0 * lat) - (35.0 * Math.pow(e, 3) / 3072.0) * Math.sin(6.0 * lat));
       x = dx + k0 * V * (A + (1 - T + C) * Math.pow(A, 3) / 6 + (5 - 18 * T + Math.pow(T, 2) + 72 * C - 58 * e2) * Math.pow(A, 5) / 120);
       y = dy + k0 * (M + V * Math.tan(lat) * (Math.pow(A, 2) / 2 + (5 - T + 9 * C + 4 * Math.pow(C, 2)) * Math.pow(A, 4) / 24 + (61 - 58 * T + Math.pow(T, 2) + 600 * C - 330 * e2) * Math.pow(A, 6) / 720));
-      console.log(dx);
-      console.log(dx + k0 * V * (A + (1 - T + C) * Math.pow(A, 3) / 6));
-      console.log(k0, V, A, T, C);
-      console.log(dx + k0 * V * (A + (1 - T + C) * Math.pow(A, 3) / 6 + (5 - 18 * T + Math.pow(T, 2) + 72 * C - 58 * e2) * Math.pow(A, 5) / 120));
       return [x, y];
     },
     toGws84: function(x, y){
