@@ -77,3 +77,5 @@ coord =
     return {lat, lng}
 
 (if @window? => @coord = {} else @) <<< coord
+
+if typeof(module) != typeof(undefined) => module.exports = coord
